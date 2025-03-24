@@ -94,9 +94,10 @@ ODBCConnection class >> connections [
 
 { #category : #'private - finalization' }
 ODBCConnection class >> createNewFinalizationRegistry [
-	"Use a FinalizationRegistry so this can take care of finalization for us"
+	"Not all versions of Pharo (specially old versions) have a FinalizationRegistry
+	that takes care of the finalization, if that's the case, use the classic WeakRegistry alternative."
 
-	^ FinalizationRegistry new
+	^ ((Smalltalk at: #FinalizationRegistry) ifNil: [ WeakRegistry ]) new
 ]
 
 { #category : #exceptions }

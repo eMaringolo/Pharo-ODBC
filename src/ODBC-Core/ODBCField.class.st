@@ -243,12 +243,16 @@ ODBCField >> getFloat [
 
 { #category : #converting }
 ODBCField >> getGuid [
-	"Private - Answer a <UUID> read from the receiver's buffer."
+	"Private - Answer a <UUID> read from the receiver's buffer.
+	NOTE: We create the object manually because older versions of Pharo
+	can't coerce arguments when doing memcpy()."
 
-	| result  |
-	result := UUID new.
-	LibC memCopy: buffer to: result size: result size.
-	^ result
+	| bytes uuid |
+	bytes := ByteArray new: 16.
+	uuid := UUID basicNew: 16.
+	LibC memCopy: buffer to: bytes size: bytes size.
+	bytes doWithIndex: [ :byte :index | uuid at: index put: byte ].
+	^ uuid
 ]
 
 { #category : #converting }
