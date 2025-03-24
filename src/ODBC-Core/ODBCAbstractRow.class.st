@@ -48,6 +48,17 @@ ODBCAbstractRow >> asObject [
 	^ self subclassResponsibility
 ]
 
+{ #category : #converting }
+ODBCAbstractRow >> asOrderedDictionary [
+	
+	| result |
+	result := OrderedDictionary new.
+	self columns with: self contents do: [ :column :value |
+		result at: column name put: value
+	 ].
+	^result
+]
+
 { #category : #accessing }
 ODBCAbstractRow >> at: aString [
 	"Answer the field named aSymbol from the receiver."
