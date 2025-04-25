@@ -171,7 +171,7 @@ ODBCAbstractStatement >> cursorType: aSymbol [
 ODBCAbstractStatement >> dbCheckException: anIntegerRetCode [
 	"Private - Checks anIntegerRetCode to see if an ODBCError or ODBCWarning should be 	signalled"
 
-	^ anIntegerRetCode = SQL_SUCCESS
+	anIntegerRetCode = SQL_SUCCESS
 		ifFalse:
 			["Signal an error or warning - decide which"
 
